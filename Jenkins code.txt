@@ -1,0 +1,77 @@
+Python
+
+
+pipeline {
+    agent any
+
+    stages {
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
+
+        stage('Install') {
+            steps {
+                bat 'py -m pip install flask'
+            }
+        }
+
+        stage('Build') {
+            steps {
+                bat 'py -m py_compile app.py'
+            }
+        }
+
+        stage('Run') {
+            steps {
+                bat 'py app.py'
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'Python Project Success'
+        }
+        failure {
+            echo 'Python Project Failed'
+        }
+    }
+}
+
+
+JAVA
+
+pipeline {
+    agent any
+
+    stages {
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
+
+        stage('Build') {
+            steps {
+                bat 'javac Main.java'
+            }
+        }
+
+        stage('Run') {
+            steps {
+                bat 'java Main'
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'Java Project Success'
+        }
+        failure {
+            echo 'Java Project Failed'
+        }
+    }
+}
