@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Counter App</title>
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="counter-card">
+        <h1>Counter App</h1>
+        <p class="subtitle">Increment • Decrement • Reset</p>
+
+        <div class="counter-value">{{ count }}</div>
+
+        <div class="buttons">
+            <form action="{{ url_for('decrement') }}" method="POST">
+                <button class="decrement" type="submit">− Decrement</button>
+            </form>
+
+            <form action="{{ url_for('increment') }}" method="POST">
+                <button class="increment" type="submit">+ Increment</button>
+            </form>
+        </div>
+
+        <form action="{{ url_for('reset') }}" method="POST">
+            <button class="reset" type="submit">Reset Counter</button>
+        </form>
+    </div>
+</body>
+</html>

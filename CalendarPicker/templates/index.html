@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendar Picker</title>
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="calendar-card">
+        <h1>📅 Calendar Picker</h1>
+        <p>Select a date from the calendar</p>
+
+        <form method="POST">
+            <label for="selected_date">Choose Date</label>
+
+            <input type="date"
+                   id="selected_date"
+                   name="selected_date"
+                   required>
+
+            <button type="submit">Display Date</button>
+        </form>
+
+        {% if formatted_date %}
+            <div class="result">
+                <h2>Selected Date</h2>
+                <p>{{ formatted_date }}</p>
+                {% if selected_date %}
+                    <small>ISO format: {{ selected_date }}</small>
+                {% endif %}
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>

@@ -1,0 +1,68 @@
+pipeline {
+    agent any
+
+    environment {
+        APP_NAME = 'OnlineShoppingBill'
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                echo 'Starting Online Shopping Bill Calculator pipeline'
+                checkout scm
+            }
+        }
+
+        stage('Install Dependencies') {
+            steps {
+                bat 'py -m pip install -r requirements.txt'
+            }
+        }
+
+        stage('Code Check') {
+            steps {
+                bat 'py -m py_compile app.py'
+                echo 'Python syntax check passed'
+            }
+        }
+
+        stage('Application Test') {
+            steps {
+                bat '''
+                py -c "from app import app; c=app.test_client(); r=c.get('/'); assert r.status_code == 200; print('Application test passed')"
+                '''
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                echo 'Deployment stage completed for the demo pipeline.'
+                echo 'The application can be started with: py app.py'
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'SUCCESS ALERT: Build and application test passed.'
+            emailext(
+                subject: "SUCCESS: ${JOB_NAME} #${BUILD_NUMBER}",
+                body: "The ${APP_NAME} pipeline completed successfully. Build: ${BUILD_URL}",
+                to: "${env.ALERT_EMAIL ?: 'your-email@example.com'}"
+            )
+        }
+
+        failure {
+            echo 'FAILURE ALERT: Check the Jenkins console output.'
+            emailext(
+                subject: "FAILURE: ${JOB_NAME} #${BUILD_NUMBER}",
+                body: "The ${APP_NAME} pipeline failed. Check the logs: ${BUILD_URL}",
+                to: "${env.ALERT_EMAIL ?: 'your-email@example.com'}"
+            )
+        }
+
+        always {
+            echo 'Jenkins pipeline finished.'
+        }
+    }
+}

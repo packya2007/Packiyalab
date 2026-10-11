@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Shopping Bill Calculator</title>
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Online Shopping</h1>
+        <p class="subtitle">Shopping Bill Calculator</p>
+
+        <form method="POST">
+            <h2>Select Products</h2>
+
+            {% for name, price in products.items() %}
+            <div class="product">
+                <div>
+                    <strong>{{ name }}</strong>
+                    <p>₹{{ "{:,.2f}".format(price) }}</p>
+                </div>
+                <label>
+                    Qty
+                    <input type="number" name="{{ name }}"
+                           min="0" value="0">
+                </label>
+            </div>
+            {% endfor %}
+
+            <button type="submit">Calculate Bill</button>
+        </form>
+
+        {% if bill %}
+        <div class="bill">
+            <h2>Your Bill</h2>
+
+            <table>
+                <tr>
+                    <th>Product</th>
+                    <th>Qty</th>
+                    <th>Amount</th>
+                </tr>
+
+                {% for item in bill %}
+                <tr>
+                    <td>{{ item.name }}</td>
+                    <td>{{ item.quantity }}</td>
+                    <td>₹{{ "{:,.2f}".format(item.amount) }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+
+            <p>Subtotal: ₹{{ "{:,.2f}".format(subtotal) }}</p>
+            <p class="discount">
+                Discount: −₹{{ "{:,.2f}".format(discount) }}
+            </p>
+            <h2 class="total">
+                Final Total: ₹{{ "{:,.2f}".format(total) }}
+            </h2>
+
+            {% if discount > 0 %}
+            <p class="success">You received a 10% discount!</p>
+            {% endif %}
+        </div>
+        {% elif request.method == "POST" %}
+        <p class="success">Please select at least one product.</p>
+        {% endif %}
+    </div>
+</body>
+</html>

@@ -1,0 +1,76 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #dce8ff, #e9ddff);
+}
+
+.calendar-card {
+    width: 90%;
+    max-width: 420px;
+    padding: 35px;
+    background: white;
+    border-radius: 18px;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+}
+
+h1 {
+    color: #4052bd;
+}
+
+label {
+    display: block;
+    text-align: left;
+    margin: 20px 0 8px;
+    font-weight: bold;
+}
+
+input[type="date"] {
+    width: 100%;
+    padding: 13px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 16px;
+}
+
+button {
+    width: 100%;
+    padding: 13px;
+    margin-top: 18px;
+    border: none;
+    border-radius: 8px;
+    background: #596bd8;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #4052bd;
+}
+
+.result {
+    margin-top: 25px;
+    padding: 15px;
+    border-radius: 10px;
+    background: #edf2ff;
+    color: #344b8e;
+    overflow-wrap: anywhere;
+}
+
+.result p {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+small {
+    font-size: 12px;
+}
