@@ -1,0 +1,8 @@
+Python
+py -m pip install -r requirements.txt
+py -m py_compile app.py
+py -c "from app import app; assert app.test_client().get('/').status_code == 200; print('Test Passed')"
+
+JAVA
+javac Main.java
+java Main
